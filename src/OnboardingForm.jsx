@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwYQCSKKEXB-ucMGCRNcO2Ws_PaorXWTbcMvg7wEhE1p8-9ims0M3aaZgSIzdHmZ3nR/exec"; // <-- replace this
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzNVI0xiPciByMscm9tELTvdCyij6TxQHQYkI58LKGIRcBc9TePNT1I1w6YcRoZSmHmLA/exec"; // <-- replace this
 
 export default function OnboardingForm() {
   const [loading, setLoading] = useState(false);
