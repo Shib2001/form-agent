@@ -13,7 +13,38 @@ export default function OnboardingForm() {
     setSuccess("");
     setError("");
 
-    const formData = new FormData(e.target);
+    // const formData = new FormData(e.target);
+  //-------------------------------------------------------------------------------------------------------------------//
+
+  const formData = new FormData();
+
+// Append text fields safely
+formData.append("fullName", e.target.fullName.value);
+formData.append("phone", e.target.phone.value);
+formData.append("email", e.target.email.value);
+formData.append("address1", e.target.address1.value);
+formData.append("address2", e.target.address2.value);
+formData.append("city", e.target.city.value);
+formData.append("postalCode", e.target.postalCode.value);
+formData.append("state", e.target.state.value);
+formData.append("dob", e.target.dob.value);
+formData.append("panNumber", e.target.panNumber.value);
+formData.append("aadharNumber", e.target.aadharNumber.value);
+formData.append("bankName", e.target.bankName.value);
+formData.append("accountHolderName", e.target.accountHolderName.value);
+formData.append("accountNumber", e.target.accountNumber.value);
+formData.append("ifscCode", e.target.ifscCode.value);
+formData.append("experience", e.target.experience.value);
+formData.append("wantLink", e.target.wantLink.value);
+formData.append("declaration", e.target.declaration.checked ? "Yes" : "No");
+
+// Append FILES manually
+formData.append("profilePhoto", e.target.profilePhoto.files[0]);
+formData.append("panPhoto", e.target.panPhoto.files[0]);
+formData.append("aadharFrontPhoto", e.target.aadharFrontPhoto.files[0]);
+formData.append("aadharBackPhoto", e.target.aadharBackPhoto.files[0]);
+formData.append("cancelledChequePhoto", e.target.cancelledChequePhoto.files[0]);
+
 
     try {
       const response = await fetch(SCRIPT_URL, {
