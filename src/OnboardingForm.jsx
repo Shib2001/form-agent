@@ -40,7 +40,7 @@ export default function OnboardingForm() {
     <div className="max-w-3xl mx-auto p-6">
       <h1 className="text-3xl font-semibold mb-6">Partner Onboarding Form</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
 
         {/* Full Name */}
         <input
