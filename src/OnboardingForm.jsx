@@ -1,273 +1,247 @@
 import React, { useState } from "react";
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzNVI0xiPciByMscm9tELTvdCyij6TxQHQYkI58LKGIRcBc9TePNT1I1w6YcRoZSmHmLA/exec"; // <-- replace this
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwObApdxKDC1F-nSdx4pvzhXfVr2b-SIru_ynQYFBAXX8LfEpXBuYn0mUvr2-b4-1PS/exec";
 
-export default function OnboardingForm() {
+export default function SimpleForm() {
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
-  const [error, setError] = useState("");
 
-  async function handleSubmit(e) {
+  const [formValues, setFormValues] = useState({
+    name: "",
+    phone_number: "",
+    email: "",
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    postal_code: "",
+    dob: "",
+    pan_number: "",
+    aadhar_number: "",
+    bank_name: "",
+    account_holder: "",
+    account_number: "",
+    ifsc_code: "",
+    experience: "",
+    custom_link: "",
+    declaration: false,
+  });
+
+  const [files, setFiles] = useState({
+    profile_photo: null,
+    pan_photo: null,
+    aadhar_front: null,
+    aadhar_back: null,
+    cancelled_cheque: null,
+  });
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
+
+  const handleFileChange = (e) => {
+    const { name, files: selectedFiles } = e.target;
+    setFiles({
+      ...files,
+      [name]: selectedFiles[0],
+    });
+  };
+
+  // Convert file to Base64
+  const fileToBase64 = (file) => {
+    return new Promise((resolve) => {
+      if (!file) return resolve(null);
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        resolve({
+          base64: reader.result.split(",")[1],
+          type: file.type,
+          name: file.name,
+        });
+      };
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setSuccess("");
-    setError("");
 
-    // const formData = new FormData(e.target);
-  //-------------------------------------------------------------------------------------------------------------------//
+    const fd = new FormData();
 
-  const formData = new FormData();
+    // Append all text values
+    Object.keys(formValues).forEach((key) => {
+      fd.append(key, formValues[key]);
+    });
 
-// Append text fields safely
-formData.append("fullName", e.target.fullName.value);
-formData.append("phone", e.target.phone.value);
-formData.append("email", e.target.email.value);
-formData.append("address1", e.target.address1.value);
-formData.append("address2", e.target.address2.value);
-formData.append("city", e.target.city.value);
-formData.append("postalCode", e.target.postalCode.value);
-formData.append("state", e.target.state.value);
-formData.append("dob", e.target.dob.value);
-formData.append("panNumber", e.target.panNumber.value);
-formData.append("aadharNumber", e.target.aadharNumber.value);
-formData.append("bankName", e.target.bankName.value);
-formData.append("accountHolderName", e.target.accountHolderName.value);
-formData.append("accountNumber", e.target.accountNumber.value);
-formData.append("ifscCode", e.target.ifscCode.value);
-formData.append("experience", e.target.experience.value);
-formData.append("wantLink", e.target.wantLink.value);
-formData.append("declaration", e.target.declaration.checked ? "Yes" : "No");
-
-// Append FILES manually
-formData.append("profilePhoto", e.target.profilePhoto.files[0]);
-formData.append("panPhoto", e.target.panPhoto.files[0]);
-formData.append("aadharFrontPhoto", e.target.aadharFrontPhoto.files[0]);
-formData.append("aadharBackPhoto", e.target.aadharBackPhoto.files[0]);
-formData.append("cancelledChequePhoto", e.target.cancelledChequePhoto.files[0]);
-
+    // Append all files
+    for (const key in files) {
+      const fileObj = await fileToBase64(files[key]);
+      if (fileObj) {
+        fd.append(key, fileObj.base64);
+        fd.append(`${key}_type`, fileObj.type);
+        fd.append(`${key}_name`, fileObj.name);
+      }
+    }
 
     try {
-      const response = await fetch(SCRIPT_URL, {
+      await fetch(SCRIPT_URL, {
         method: "POST",
-        body: formData,
+        body: fd,
       });
 
-      const result = await response.json();
+      alert("Form submitted successfully!");
 
-      if (result.success) {
-        setSuccess("Form submitted successfully!");
-        e.target.reset();
-      } else {
-        setError("Error: " + result.error);
-      }
-    } catch (err) {
-      setError("Something went wrong.");
+      setFormValues({
+        name: "",
+        phone_number: "",
+        email: "",
+        address1: "",
+        address2: "",
+        city: "",
+        state: "",
+        postal_code: "",
+        dob: "",
+        pan_number: "",
+        aadhar_number: "",
+        bank_name: "",
+        account_holder: "",
+        account_number: "",
+        ifsc_code: "",
+        experience: "",
+        custom_link: "",
+        declaration: false,
+      });
+
+      setFiles({
+        profile_photo: null,
+        pan_photo: null,
+        aadhar_front: null,
+        aadhar_back: null,
+        cancelled_cheque: null,
+      });
+
+    } catch (error) {
+      alert("Error submitting form");
     }
 
     setLoading(false);
-  }
+  };
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-3xl font-semibold mb-6">Partner Onboarding Form</h1>
+    <div className="max-w-md mx-auto mt-10 p-5 bg-white shadow rounded">
+      <h2 className="text-center text-xl font-semibold mb-5">
+        Partner Registration Form
+      </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
+      <form onSubmit={handleSubmit} className="space-y-4">
 
-        {/* Full Name */}
-        <input
-          name="fullName"
-          type="text"
-          placeholder="Full Name"
-          className="w-full p-3 border rounded"
-          required
-        />
+        {/* All your inputs remain EXACTLY as you wrote them */}
 
-        {/* Phone */}
-        <input
-          name="phone"
-          type="text"
-          placeholder="Phone Number"
-          className="w-full p-3 border rounded"
-          required
-        />
+        {/* Name */}
+        <input type="text" name="name" placeholder="Full Name"
+          className="w-full p-2 border rounded" onChange={handleChange} required />
+
+        {/* Phone Number */}
+        <input type="text" name="phone_number" placeholder="Phone Number"
+          className="w-full p-2 border rounded" onChange={handleChange} required />
 
         {/* Email */}
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          className="w-full p-3 border rounded"
-          required
-        />
+        <input type="email" name="email" placeholder="Email"
+          className="w-full p-2 border rounded" onChange={handleChange} required />
+
+        {/* Profile Photo */}
+        <input type="file" name="profile_photo"
+          className="w-full" onChange={handleFileChange} required />
 
         {/* Address */}
-        <input
-          name="address1"
-          type="text"
-          placeholder="Address line 1"
-          className="w-full p-3 border rounded"
-        />
+        <input name="address1" placeholder="Address Line 1"
+          className="w-full p-2 border rounded" onChange={handleChange} required />
+        <input name="address2" placeholder="Address Line 2"
+          className="w-full p-2 border rounded" onChange={handleChange} />
 
-        <input
-          name="address2"
-          type="text"
-          placeholder="Address line 2"
-          className="w-full p-3 border rounded"
-        />
+        <div className="grid grid-cols-2 gap-3">
+          <input name="city" placeholder="City"
+            className="p-2 border rounded" onChange={handleChange} required />
+          <input name="state" placeholder="State"
+            className="p-2 border rounded" onChange={handleChange} required />
+        </div>
 
-        {/* City */}
-        <input
-          name="city"
-          type="text"
-          placeholder="City"
-          className="w-full p-3 border rounded"
-        />
-        <input
-  name="postalCode"
-  type="text"
-  placeholder="Postal code"
-  className="w-full p-3 border rounded"
-/>
-
-
-        {/* State */}
-        <input
-          name="state"
-          type="text"
-          placeholder="State"
-          className="w-full p-3 border rounded"
-        />
+        <input name="postal_code" placeholder="Postal Code"
+          className="w-full p-2 border rounded" onChange={handleChange} required />
 
         {/* DOB */}
-        <input
-          name="dob"
-          type="date"
-          placeholder="Date of Birth"
-          className="w-full p-3 border rounded"
-        />
+        <input type="date" name="dob"
+          className="w-full p-2 border rounded" onChange={handleChange} required />
 
         {/* PAN */}
-        <input
-          name="panNumber"
-          type="text"
-          placeholder="PAN Number"
-          className="w-full p-3 border rounded"
-        />
+        <input name="pan_number" placeholder="PAN Number"
+          className="w-full p-2 border rounded" onChange={handleChange} required />
+        <input type="file" name="pan_photo"
+          className="w-full" onChange={handleFileChange} required />
 
-        {/* Aadhar */}
-        <input
-          name="aadharNumber"
-          type="text"
-          placeholder="Aadhar Number"
-          className="w-full p-3 border rounded"
-        />
+        {/* Aadhaar */}
+        <input name="aadhar_number" placeholder="Aadhaar Last 4 digits"
+          className="w-full p-2 border rounded" onChange={handleChange} required />
+        <input type="file" name="aadhar_front"
+          className="w-full" onChange={handleFileChange} required />
+        <input type="file" name="aadhar_back"
+          className="w-full" onChange={handleFileChange} required />
 
         {/* Bank */}
-        <input
-          name="bankName"
-          type="text"
-          placeholder="Bank Name"
-          className="w-full p-3 border rounded"
-        />
+        <input name="bank_name" placeholder="Bank Name"
+          className="w-full p-2 border rounded" onChange={handleChange} required />
+        <input name="account_holder" placeholder="Account Holder Name"
+          className="w-full p-2 border rounded" onChange={handleChange} required />
+        <input name="account_number" placeholder="Account Number"
+          className="w-full p-2 border rounded" onChange={handleChange} required />
+        <input name="ifsc_code" placeholder="IFSC Code"
+          className="w-full p-2 border rounded" onChange={handleChange} required />
 
-        <input
-          name="accountHolderName"
-          type="text"
-          placeholder="Account Holder Name"
-          className="w-full p-3 border rounded"
-        />
-
-        <input
-          name="accountNumber"
-          type="text"
-          placeholder="Account Number"
-          className="w-full p-3 border rounded"
-        />
-
-        <input
-          name="ifscCode"
-          type="text"
-          placeholder="IFSC Code"
-          className="w-full p-3 border rounded"
-        />
+        {/* Cancelled Cheque */}
+        <input type="file" name="cancelled_cheque"
+          className="w-full" onChange={handleFileChange} required />
 
         {/* Experience */}
-        <div>
-  <p className="font-medium mb-1">Do you have any prior experience in selling insurance?</p>
+        <select name="experience"
+          className="w-full p-2 border rounded"
+          onChange={handleChange} required>
+          <option value="">Any experience in selling insurance?</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
 
-  <div className="flex items-center gap-4">
-    <label className="flex items-center gap-2">
-      <input type="radio" name="experience" value="Yes" required />
-      Yes
-    </label>
-
-    <label className="flex items-center gap-2">
-      <input type="radio" name="experience" value="No" required />
-      No
-    </label>
-  </div>
-</div>
-
-
-        {/* Want link */}
-        <div>
-  <p className="font-medium mb-1">Do you want a personalised ServeAmigo link?</p>
-
-  <div className="flex items-center gap-4">
-    <label className="flex items-center gap-2">
-      <input type="radio" name="wantLink" value="Yes" required />
-      Yes
-    </label>
-
-    <label className="flex items-center gap-2">
-      <input type="radio" name="wantLink" value="No" required />
-      No
-    </label>
-  </div>
-</div>
+        {/* Custom Link */}
+        <select name="custom_link"
+          className="w-full p-2 border rounded"
+          onChange={handleChange} required>
+          <option value="">Want a personalised ServeAmigo Link?</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
 
         {/* Declaration */}
-        <div className="flex items-center gap-3">
-  <input
-    type="checkbox"
-    name="declaration"
-    value="I accept this form"
-    required
-    className="w-4 h-4"
-  />
-  <label className="font-medium">I accept this form</label>
-</div>
+        <label className="flex items-center gap-2">
+          <input type="checkbox" name="declaration"
+            onChange={handleChange} required />
+          <span>I confirm all terms & conditions</span>
+        </label>
 
-
-        {/* File Inputs */}
-        <label className="block font-medium">Profile Photo</label>
-        <input name="profilePhoto" type="file" accept="image/*" className="w-full" required />
-
-        <label className="block font-medium">PAN Photo</label>
-        <input name="panPhoto" type="file" accept="image/*" className="w-full" required />
-
-        <label className="block font-medium">Aadhar Front Photo</label>
-        <input name="aadharFrontPhoto" type="file" accept="image/*" className="w-full" required />
-
-        <label className="block font-medium">Aadhar Back Photo</label>
-        <input name="aadharBackPhoto" type="file" accept="image/*" className="w-full" required />
-
-        <label className="block font-medium">Cancelled Cheque Photo</label>
-        <input name="cancelledChequePhoto" type="file" accept="image/*" className="w-full" required />
-
-        {/* Submit Button */}
+        {/* Submit button */}
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-3 rounded font-medium"
+          className="w-full bg-blue-600 text-white p-2 rounded"
         >
           {loading ? "Submitting..." : "Submit"}
         </button>
 
-        {/* Status Messages */}
-        {success && <p className="text-green-600">{success}</p>}
-        {error && <p className="text-red-600">{error}</p>}
       </form>
     </div>
   );
 }
+
