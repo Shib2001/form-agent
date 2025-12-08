@@ -177,14 +177,16 @@ page.drawText(new Date().toLocaleDateString("en-IN"), {
                     Verified UID: {uid}
                   </span>
                 </div>
-                <div className="rounded-lg overflow-hidden border border-[#0A4DAD1A] shadow-sm bg-white">
-                  <iframe
-                    src={`/Agreement.pdf#toolbar=1&navpanes=0&scrollbar=1&view=FitH`}
-                    width="100%"
-                    height="70vh"
-                    title="Agreement Preview"
-                  ></iframe>
-                </div>
+                <div className="rounded-lg border border-[#0A4DAD1A] shadow-sm bg-white">
+  <iframe
+    src={`/Agreement.pdf#toolbar=0&zoom=100`}
+    width="100%"
+    height="80vh"
+    title="Agreement Preview"
+    style={{ border: "none" }}
+  ></iframe>
+</div>
+
               </div>
 
               <div className="bg-white border border-[#0A4DAD1A] rounded-xl p-6 shadow-md space-y-4">
