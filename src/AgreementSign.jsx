@@ -68,10 +68,10 @@ export default function AgreementSign() {
 
     // Draw signature only
     page.drawImage(signatureImage, {
-      x: 130,
-      y: 120,
-      width: 200,
-      height: 80,
+      x: 150,
+      y: 260,
+      width: 220,
+      height: 100,
     });
 
     const finalPdfBytes = await pdfDoc.save();
