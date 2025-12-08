@@ -121,7 +121,7 @@ export default function AgreementSign() {
           <h1 className="text-2xl font-semibold mb-4">Agreement Preview</h1>
 
           <iframe
-            src="/Agreement.pdf"
+            src={`https://docs.google.com/gview?embedded=true&url=${window.location.origin}/Agreement.pdf`}
             width="100%"
             height="600px"
             title="Agreement Preview"
