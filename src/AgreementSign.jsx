@@ -3,7 +3,7 @@ import SignaturePad from "react-signature-canvas";
 import { PDFDocument } from "pdf-lib";
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbwObApdxKDC1F-nSdx4pvzhXfVr2b-SIru_ynQYFBAXX8LfEpXBuYn0mUvr2-b4-1PS/exec";
+  "https://script.google.com/macros/s/AKfycbzH1QqUBngAzsgZbWPCiZhIsEoriczlXdPMqDjDc3Lkw5OmJoOjMj5O1Szr4290UTycHQ/exec";
 
 export default function AgreementSign() {
   const [aadhar, setAadhar] = useState("");
