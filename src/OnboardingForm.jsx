@@ -253,7 +253,7 @@
 import React, { useState } from "react";
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbzMTQQY1TWUJbn-OULyGtMq1ayKAaW_qJSVh5l8hBeryIGxKVNCpwGiCFaXrXTBC_WiMA/exec";
+  "https://script.google.com/macros/s/AKfycbxLf1T3z3i3P6ZmgIkOA4Hu00xdMzEatu9U5T8HBpdH5zRbeLh9PueeK4amDxQKe0pOlw/exec";
 
 export default function SimpleForm() {
   const [loading, setLoading] = useState(false);
@@ -278,6 +278,8 @@ export default function SimpleForm() {
     custom_link: "",
     declaration: false,
   });
+
+  const [confirmAccountNumber, setConfirmAccountNumber] = useState("");
 
   const [files, setFiles] = useState({
     profile_photo: null,
@@ -337,6 +339,18 @@ export default function SimpleForm() {
       alert("Aadhaar number must be 12 digits.");
       return false;
     }
+    if (!/^[0-9]{9,18}$/.test(formValues.account_number)) {
+      alert("Account number must be 9 to 18 digits.");
+      return false;
+    }
+    if (confirmAccountNumber !== formValues.account_number) {
+      alert("Account number and confirm account number must match.");
+      return false;
+    }
+    if (!/^[A-Z]{4}0[0-9A-Z]{6}$/.test(formValues.ifsc_code.toUpperCase())) {
+      alert("Invalid IFSC format. Example: ABCD0EF1234");
+      return false;
+    }
     return true;
   };
 
@@ -362,6 +376,8 @@ export default function SimpleForm() {
       custom_link: "",
       declaration: false,
     });
+
+    setConfirmAccountNumber("");
 
     // Reset file state
     setFiles({
@@ -420,33 +436,43 @@ export default function SimpleForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
-      <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+    <div
+      className="min-h-screen py-10 px-4"
+      style={{ background: "linear-gradient(135deg, #f7fbff 0%, #eef4ff 100%)" }}
+    >
+      <div className="w-full max-w-5xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-[#0A4DAD12]">
         {/* Header with Logo */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-8 text-center">
-          <img 
-            src="/serlogo.png" 
-            alt="ServeAmigo Logo" 
-            className="h-16 mx-auto mb-4 object-contain"
-          />
+        <div
+          className="px-6 py-10 text-center"
+          style={{ background: "linear-gradient(90deg, #0A4DAD 0%, #0A4DAD 70%, #F6C336 100%)" }}
+        >
+          <div className="flex items-center justify-center mb-4">
+            <div className="h-16 w-16 rounded-full bg-white/90 shadow-md border border-white flex items-center justify-center overflow-hidden">
+              <img 
+                src="/serlogo.png" 
+                alt="ServeAmigo Logo" 
+                className="h-14 w-14 object-contain"
+              />
+            </div>
+          </div>
           <h2 className="text-2xl font-bold text-white">
-            Partner Registration Form
+            Partner Onboarding Form
           </h2>
           <p className="text-blue-100 mt-2 text-sm">
             Join ServeAmigo and start your journey today
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="px-6 py-8 space-y-6">
+        <form onSubmit={handleSubmit} className="px-8 py-10 space-y-8">
           
           {/* Personal Information Section */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-800 border-b-2 border-blue-200 pb-2">
+            <h3 className="text-lg font-semibold text-gray-800 border-b-2 border-[#0A4DAD1F] pb-2">
               Personal Information
             </h3>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label className="block text-sm font-medium text-gray-800 mb-1.5">
                 Full Name <span className="text-red-500">*</span>
               </label>
               <input 
@@ -460,7 +486,7 @@ export default function SimpleForm() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label className="block text-sm font-medium text-gray-800 mb-1.5">
                 Phone Number <span className="text-red-500">*</span>
                 <span className="text-gray-500 text-xs ml-1">(10 digits)</span>
               </label>
@@ -476,7 +502,7 @@ export default function SimpleForm() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label className="block text-sm font-medium text-gray-800 mb-1.5">
                 Email <span className="text-red-500">*</span>
               </label>
               <input 
@@ -514,10 +540,10 @@ export default function SimpleForm() {
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
                 Profile Photo <span className="text-red-500">*</span>
               </label>
-              <input 
+              <input
                 type="file" 
                 name="profile_photo" 
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0A4DAD] focus:border-[#0A4DAD] transition file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#0A4DAD] file:text-white hover:file:bg-[#083d8a]"
                 onChange={handleFileChange} 
                 required 
               />
@@ -530,7 +556,7 @@ export default function SimpleForm() {
               <input 
                 type="file" 
                 name="pan_photo" 
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#0A4DAD] file:text-white hover:file:bg-[#083d8a]"
                 onChange={handleFileChange} 
                 required 
               />
@@ -543,7 +569,7 @@ export default function SimpleForm() {
               <input 
                 type="file" 
                 name="aadhar_front" 
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#0A4DAD] file:text-white hover:file:bg-[#083d8a]"
                 onChange={handleFileChange} 
                 required 
               />
@@ -556,7 +582,7 @@ export default function SimpleForm() {
               <input 
                 type="file" 
                 name="aadhar_back" 
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#0A4DAD] file:text-white hover:file:bg-[#083d8a]"
                 onChange={handleFileChange} 
                 required 
               />
@@ -569,7 +595,7 @@ export default function SimpleForm() {
               <input 
                 type="file" 
                 name="cancelled_cheque" 
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#0A4DAD] file:text-white hover:file:bg-[#083d8a]"
                 onChange={handleFileChange} 
                 required 
               />
@@ -578,12 +604,12 @@ export default function SimpleForm() {
 
           {/* Address Section */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-800 border-b-2 border-blue-200 pb-2">
+            <h3 className="text-lg font-semibold text-gray-800 border-b-2 border-[#0A4DAD1F] pb-2">
               Address Details
             </h3>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label className="block text-sm font-medium text-gray-800 mb-1.5">
                 Address Line 1 <span className="text-red-500">*</span>
               </label>
               <input 
@@ -650,12 +676,12 @@ export default function SimpleForm() {
 
           {/* KYC Details Section */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-800 border-b-2 border-blue-200 pb-2">
+            <h3 className="text-lg font-semibold text-gray-800 border-b-2 border-[#0A4DAD1F] pb-2">
               KYC Details
             </h3>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label className="block text-sm font-medium text-gray-800 mb-1.5">
                 PAN Number <span className="text-red-500">*</span>
               </label>
               <input 
@@ -685,7 +711,7 @@ export default function SimpleForm() {
 
           {/* Bank Details Section */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-800 border-b-2 border-blue-200 pb-2">
+            <h3 className="text-lg font-semibold text-gray-800 border-b-2 border-[#0A4DAD1F] pb-2">
               Bank Details
             </h3>
             
@@ -726,6 +752,16 @@ export default function SimpleForm() {
                 onChange={handleChange} 
                 required 
               />
+          <label className="block text-sm font-medium text-gray-700 mb-1.5 mt-3">
+            Confirm Account Number <span className="text-red-500">*</span>
+          </label>
+          <input 
+            name="confirm_account_number" 
+            value={confirmAccountNumber}
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+            onChange={(e) => setConfirmAccountNumber(e.target.value)} 
+            required 
+          />
             </div>
 
             <div>
@@ -784,7 +820,7 @@ export default function SimpleForm() {
           </div>
 
           {/* Declaration */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div className="bg-[#fdf7e8] border border-[#F6C33666] rounded-lg p-4">
             <label className="flex items-start gap-3 cursor-pointer">
               <input 
                 type="checkbox" 
@@ -795,7 +831,7 @@ export default function SimpleForm() {
                 required 
               />
               <span className="text-sm text-gray-700">
-                I confirm all terms & conditions <span className="text-red-500">*</span>
+                I confirm all information provided is true and authorise ServeAmigo to verify and onboard me as a partner  <span className="text-red-500">*</span>
               </span>
             </label>
           </div>
@@ -804,7 +840,8 @@ export default function SimpleForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-3.5 px-6 rounded-lg hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md"
+            className="w-full text-white font-semibold py-3.5 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg"
+            style={{ background: "linear-gradient(90deg, #0A4DAD 0%, #0A4DAD 60%, #F6C336 100%)" }}
           >
             {loading && (
               <div className="w-5 h-5 border-3 border-white border-t-transparent rounded-full animate-spin"></div>

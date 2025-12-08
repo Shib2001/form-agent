@@ -4,7 +4,7 @@ import SignaturePad from "react-signature-canvas";
 import { PDFDocument } from "pdf-lib";
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbzMTQQY1TWUJbn-OULyGtMq1ayKAaW_qJSVh5l8hBeryIGxKVNCpwGiCFaXrXTBC_WiMA/exec";
+  "https://script.google.com/macros/s/AKfycbxLf1T3z3i3P6ZmgIkOA4Hu00xdMzEatu9U5T8HBpdH5zRbeLh9PueeK4amDxQKe0pOlw/exec";
 
 export default function AgreementSign() {
   const [userName, setUserName] = useState("");
@@ -117,9 +117,15 @@ page.drawText(new Date().toLocaleDateString("en-IN"), {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-white py-10 px-4">
-      <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6 flex items-center justify-between">
+    <div
+      className="min-h-screen py-10 px-4"
+      style={{ background: "linear-gradient(135deg, #f7fbff 0%, #eef4ff 100%)" }}
+    >
+      <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden border border-[#0A4DAD12]">
+        <div
+          className="px-8 py-6 flex items-center justify-between"
+          style={{ background: "linear-gradient(90deg, #0A4DAD 0%, #0A4DAD 70%, #F6C336 100%)" }}
+        >
           <div>
             <h1 className="text-2xl font-bold text-white">Partner Agreement Signing</h1>
             <p className="text-blue-100 text-sm mt-1">Verify your Aadhaar, review your agreement, then sign below.</p>
@@ -132,7 +138,7 @@ page.drawText(new Date().toLocaleDateString("en-IN"), {
 
         <div className="p-8 space-y-8">
           {!verified ? (
-            <div className="bg-blue-50 border border-blue-100 rounded-xl p-6 shadow-sm">
+            <div className="bg-white border border-[#0A4DAD1A] rounded-xl p-6 shadow-md">
               <h2 className="text-lg font-semibold text-gray-800 mb-2">Aadhaar Verification</h2>
               <p className="text-sm text-gray-600 mb-4">
                 Enter your 12-digit Aadhaar number to verify your identity. We will fetch your UID to continue.
@@ -149,7 +155,8 @@ page.drawText(new Date().toLocaleDateString("en-IN"), {
                 <button
                   onClick={verifyAadhar}
                   disabled={verifyLoading}
-                  className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold px-5 py-3 rounded-lg shadow hover:from-blue-700 hover:to-indigo-700 transition disabled:opacity-60"
+                  className="inline-flex items-center justify-center gap-2 text-white font-semibold px-5 py-3 rounded-lg shadow transition disabled:opacity-60"
+                  style={{ background: "linear-gradient(90deg, #0A4DAD 0%, #0A4DAD 55%, #F6C336 100%)" }}
                 >
                   {verifyLoading && (
                     <div className="w-5 h-5 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -160,7 +167,7 @@ page.drawText(new Date().toLocaleDateString("en-IN"), {
             </div>
           ) : (
             <>
-              <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 shadow-inner">
+              <div className="bg-gray-50 border border-[#0A4DAD1A] rounded-xl p-6 shadow-inner">
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <h2 className="text-lg font-semibold text-gray-800">Agreement Preview</h2>
@@ -170,7 +177,7 @@ page.drawText(new Date().toLocaleDateString("en-IN"), {
                     Verified UID: {uid}
                   </span>
                 </div>
-                <div className="rounded-lg overflow-hidden border border-gray-200 shadow-sm bg-white">
+                <div className="rounded-lg overflow-hidden border border-[#0A4DAD1A] shadow-sm bg-white">
                   <iframe
                     src={`https://docs.google.com/gview?embedded=true&url=${window.location.origin}/Agreement.pdf`}
                     width="100%"
@@ -180,7 +187,7 @@ page.drawText(new Date().toLocaleDateString("en-IN"), {
                 </div>
               </div>
 
-              <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm space-y-4">
+              <div className="bg-white border border-[#0A4DAD1A] rounded-xl p-6 shadow-md space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-800">Signature</h3>
@@ -210,7 +217,8 @@ page.drawText(new Date().toLocaleDateString("en-IN"), {
                   <button
                     onClick={createSignedPDF}
                     disabled={loading}
-                    className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold px-5 py-3 rounded-lg shadow hover:from-green-700 hover:to-emerald-700 transition disabled:opacity-60"
+                    className="inline-flex items-center justify-center gap-2 text-white font-semibold px-5 py-3 rounded-lg shadow transition disabled:opacity-60"
+                    style={{ background: "linear-gradient(90deg, #0A4DAD 0%, #0A4DAD 55%, #F6C336 100%)" }}
                   >
                     {loading && (
                       <div className="w-5 h-5 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
