@@ -4,9 +4,10 @@ import SignaturePad from "react-signature-canvas";
 import { PDFDocument } from "pdf-lib";
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycby-L6Ju1oJG2EPP3QjnfNr1M6aqTXxfaVOkUFfCT5HYDAknvjNPzE6mNCyyTB4MJbAZdg/exec";
+  "https://script.google.com/macros/s/AKfycbzMTQQY1TWUJbn-OULyGtMq1ayKAaW_qJSVh5l8hBeryIGxKVNCpwGiCFaXrXTBC_WiMA/exec";
 
 export default function AgreementSign() {
+  const [userName, setUserName] = useState("");
   const [aadhar, setAadhar] = useState("");
   const [uid, setUid] = useState(""); // phone number returned from backend
   const [verified, setVerified] = useState(false);
@@ -47,6 +48,7 @@ export default function AgreementSign() {
 
     // backend returns phone number as UID
     setUid(data.uid);
+    setUserName(data.name);
     setVerified(true);
   };
 
@@ -65,6 +67,21 @@ export default function AgreementSign() {
 
     const pdfDoc = await PDFDocument.load(pdfBytes);
     const page = pdfDoc.getPages()[6]; // page 7
+
+    /* ------------------------------
+    AUTO-FILL NAME + DATE
+-------------------------------*/
+page.drawText(userName, {
+  x: 170,
+  y: 245,
+  size: 12,
+});
+
+page.drawText(new Date().toLocaleDateString("en-IN"), {
+  x: 170,
+  y: 220,
+  size: 12,
+});
 
     // Signature image
     const signatureDataUrl = signPad.toDataURL();
