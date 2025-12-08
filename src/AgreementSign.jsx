@@ -73,13 +73,13 @@ export default function AgreementSign() {
 -------------------------------*/
 page.drawText(userName, {
   x: 170,
-  y: 245,
+  y: 280,
   size: 12,
 });
 
 page.drawText(new Date().toLocaleDateString("en-IN"), {
   x: 170,
-  y: 220,
+  y: 270,
   size: 12,
 });
 
