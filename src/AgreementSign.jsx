@@ -69,7 +69,7 @@ export default function AgreementSign() {
     // Draw signature only
     page.drawImage(signatureImage, {
       x: 150,
-      y: 260,
+      y: 210,
       width: 220,
       height: 100,
     });
