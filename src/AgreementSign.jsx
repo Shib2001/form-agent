@@ -4,7 +4,7 @@ import SignaturePad from "react-signature-canvas";
 import { PDFDocument } from "pdf-lib";
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbyvItjAq5MsxYDhmpCbjcEOl4LSk8UjXhgg0TSEpLkOoOVbihY0qRf2h9BsgJQ5zqVo/exec";
+  "https://script.google.com/macros/s/AKfycbyIElCmn46ix9AtlMd4OIzFrmeMrbRcb9hjrO4waOJYRVQg-KZ4Cac3zBgTVger0Gza/exec";
 
 export default function AgreementSign() {
   const [userName, setUserName] = useState("");

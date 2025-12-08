@@ -253,7 +253,7 @@
 import React, { useState } from "react";
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbyvItjAq5MsxYDhmpCbjcEOl4LSk8UjXhgg0TSEpLkOoOVbihY0qRf2h9BsgJQ5zqVo/exec";
+  "https://script.google.com/macros/s/AKfycbyIElCmn46ix9AtlMd4OIzFrmeMrbRcb9hjrO4waOJYRVQg-KZ4Cac3zBgTVger0Gza/exec";
 
 export default function SimpleForm() {
   const [loading, setLoading] = useState(false);
