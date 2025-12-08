@@ -178,14 +178,20 @@ page.drawText(new Date().toLocaleDateString("en-IN"), {
                   </span>
                 </div>
                 <div className="rounded-lg border border-[#0A4DAD1A] shadow-sm bg-white">
-  <iframe
-    src={`/Agreement.pdf#toolbar=0&zoom=100`}
-    width="100%"
-    height="80vh"
-    title="Agreement Preview"
-    style={{ border: "none" }}
-  ></iframe>
-</div>
+                  <object
+                    data={`${window.location.origin}/Agreement.pdf#view=FitH&scrollbar=1&toolbar=1`}
+                    type="application/pdf"
+                    className="w-full"
+                    style={{ minHeight: "80vh" }}
+                  >
+                    <iframe
+                      src={`${window.location.origin}/Agreement.pdf#view=FitH&scrollbar=1&toolbar=1`}
+                      title="Agreement Preview"
+                      className="w-full"
+                      style={{ minHeight: "80vh", border: "none" }}
+                    />
+                  </object>
+                </div>
 
               </div>
 
