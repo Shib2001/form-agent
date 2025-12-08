@@ -179,7 +179,7 @@ page.drawText(new Date().toLocaleDateString("en-IN"), {
                 </div>
                 <div className="rounded-lg overflow-hidden border border-[#0A4DAD1A] shadow-sm bg-white">
                   <iframe
-                    src={`https://docs.google.com/gview?embedded=true&url=${window.location.origin}/Agreement.pdf`}
+                    src={`/Agreement.pdf#toolbar=1&navpanes=0&scrollbar=1&view=FitH`}
                     width="100%"
                     height="70vh"
                     title="Agreement Preview"
