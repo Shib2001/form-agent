@@ -1,10 +1,10 @@
 export default function ThankYou() {
   return (
     <div
-      className="min-h-screen flex items-center justify-center p-6"
+      className="min-h-screen flex items-center justify-center p-6 sm:p-10"
       style={{ background: "linear-gradient(135deg, #f7fbff 0%, #eef4ff 100%)" }}
     >
-      <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-[#0A4DAD12] px-8 py-10 text-center">
+      <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-[#0A4DAD12] px-6 py-8 sm:px-8 sm:py-10 text-center">
         <div className="flex items-center justify-center mb-6">
           <div className="h-16 w-16 rounded-full bg-white/90 shadow border border-[#0A4DAD22] flex items-center justify-center overflow-hidden">
             <img src="/serlogo.png" alt="ServeAmigo Logo" className="h-14 w-14 object-contain" />

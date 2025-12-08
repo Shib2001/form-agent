@@ -437,13 +437,13 @@ export default function SimpleForm() {
 
   return (
     <div
-      className="min-h-screen py-10 px-4"
+      className="min-h-screen py-8 px-4 sm:py-10 sm:px-6"
       style={{ background: "linear-gradient(135deg, #f7fbff 0%, #eef4ff 100%)" }}
     >
       <div className="w-full max-w-5xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-[#0A4DAD12]">
         {/* Header with Logo */}
         <div
-          className="px-6 py-10 text-center"
+          className="px-5 py-8 sm:px-6 sm:py-10 text-center"
           style={{ background: "linear-gradient(90deg, #0A4DAD 0%, #0A4DAD 70%, #F6C336 100%)" }}
         >
           <div className="flex items-center justify-center mb-4">
@@ -463,7 +463,7 @@ export default function SimpleForm() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="px-8 py-10 space-y-8">
+        <form onSubmit={handleSubmit} className="px-5 py-8 sm:px-8 sm:py-10 space-y-8">
           
           {/* Personal Information Section */}
           <div className="space-y-4">

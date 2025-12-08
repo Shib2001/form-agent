@@ -118,7 +118,7 @@ page.drawText(new Date().toLocaleDateString("en-IN"), {
 
   return (
     <div
-      className="min-h-screen py-10 px-4"
+      className="min-h-screen py-8 px-4 sm:py-10 sm:px-6"
       style={{ background: "linear-gradient(135deg, #f7fbff 0%, #eef4ff 100%)" }}
     >
       <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden border border-[#0A4DAD12]">
@@ -181,7 +181,7 @@ page.drawText(new Date().toLocaleDateString("en-IN"), {
                   <iframe
                     src={`https://docs.google.com/gview?embedded=true&url=${window.location.origin}/Agreement.pdf`}
                     width="100%"
-                    height="600px"
+                    height="70vh"
                     title="Agreement Preview"
                   ></iframe>
                 </div>
@@ -201,14 +201,14 @@ page.drawText(new Date().toLocaleDateString("en-IN"), {
                   </button>
                 </div>
 
-                <div className="rounded-lg border-2 border-dashed border-blue-200 bg-blue-50 flex items-center justify-center p-4">
+                <div className="rounded-lg border-2 border-dashed border-blue-200 bg-blue-50 p-4 overflow-auto">
                   <SignaturePad
                     ref={(ref) => setSignPad(ref)}
                     penColor="black"
                     canvasProps={{
-                      width: 700,
+                      width: 680,
                       height: 220,
-                      className: "bg-white shadow-inner rounded-lg",
+                      className: "bg-white shadow-inner rounded-lg min-w-[520px]",
                     }}
                   />
                 </div>

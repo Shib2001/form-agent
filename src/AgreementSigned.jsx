@@ -1,10 +1,10 @@
 export default function AgreementSigned() {
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-6"
+      className="min-h-screen flex items-center justify-center px-6 py-10"
       style={{ background: "linear-gradient(135deg, #f7fbff 0%, #eef4ff 100%)" }}
     >
-      <div className="max-w-xl w-full bg-white shadow-xl rounded-2xl p-10 text-center border border-[#0A4DAD1A] space-y-5">
+      <div className="max-w-xl w-full bg-white shadow-xl rounded-2xl p-8 sm:p-10 text-center border border-[#0A4DAD1A] space-y-5">
         <div className="flex items-center justify-center">
           <div className="h-16 w-16 rounded-full bg-white/90 shadow border border-[#0A4DAD22] flex items-center justify-center overflow-hidden">
             <img src="/serlogo.png" alt="ServeAmigo Logo" className="h-14 w-14 object-contain" />
