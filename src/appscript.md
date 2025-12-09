@@ -6,7 +6,7 @@ var folderID = "1mtIXor7pshPQ9w43qpxBXkLWth4MbBoG"; // Upload folder
 var scriptProperties = PropertiesService.getScriptProperties();
 
 /* ======================================================
-   INITIAL SETUP (run once manually)
+   INITIAL SETUP (run once manually) there it is 
 ====================================================== */
 function initialSetup() {
   var activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
