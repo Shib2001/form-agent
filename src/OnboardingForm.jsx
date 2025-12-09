@@ -275,7 +275,7 @@ export default function SimpleForm() {
     account_number: "",
     ifsc_code: "",
     experience: "",
-    custom_link: "",
+    custom_link: "no",
     declaration: false,
   });
 
@@ -351,6 +351,10 @@ export default function SimpleForm() {
       alert("Invalid IFSC format. Example: ABCD0EF1234");
       return false;
     }
+    if (!/^\d{6}$/.test(formValues.postal_code)) {
+      alert("Postal code must be exactly 6 digits.");
+      return false;
+    }
     return true;
   };
 
@@ -373,7 +377,7 @@ export default function SimpleForm() {
       account_number: "",
       ifsc_code: "",
       experience: "",
-      custom_link: "",
+      custom_link: "no",
       declaration: false,
     });
 
@@ -663,12 +667,21 @@ export default function SimpleForm() {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
                 Postal Code <span className="text-red-500">*</span>
+                <span className="text-gray-500 text-xs ml-1">(6 digits)</span>
               </label>
               <input 
+                type="text"
                 name="postal_code" 
                 value={formValues.postal_code}
+                maxLength={6}
+                pattern="[0-9]*"
+                inputMode="numeric"
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                onChange={handleChange} 
+                onChange={(e) => {
+                  // Only allow numeric input
+                  const value = e.target.value.replace(/\D/g, '');
+                  handleChange({ ...e, target: { ...e.target, value } });
+                }}
                 required 
               />
             </div>
@@ -801,22 +814,12 @@ export default function SimpleForm() {
               </select>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Want a personalised ServeAmigo Link? <span className="text-red-500">*</span>
-              </label>
-              <select 
-                name="custom_link" 
-                value={formValues.custom_link}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white"
-                onChange={handleChange} 
-                required
-              >
-                <option value="">Select an option</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
-            </div>
+            {/* Hidden field - still submitted to backend but not visible to user */}
+            <input
+              type="hidden"
+              name="custom_link"
+              value={formValues.custom_link || "no"}
+            />
           </div>
 
           {/* Declaration */}
