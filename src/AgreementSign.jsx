@@ -179,13 +179,19 @@ page.drawText(new Date().toLocaleDateString("en-IN"), {
                 </div>
                 <div className="rounded-lg border border-[#0A4DAD1A] shadow-sm bg-white">
                 <div className="rounded-lg border border-[#0A4DAD1A] shadow-sm bg-white">
-  <iframe
-    src={`https://docs.google.com/gview?embedded=true&url=${window.location.origin}/Agreement.pdf`}
-    className="w-full"
-    style={{ minHeight: "80vh", border: "none" }}
-    title="Agreement Preview"
-  ></iframe>
-</div>
+                         <iframe
+                             src={`https://docs.google.com/gview?embedded=true&url=${window.location.origin}/Agreement.pdf`}
+                             className="w-full"
+                             style={{       
+                                  height: "85vh",
+                                  border: "none",
+                                  zoom: 1.05,
+                                  transform: "scale(1.02)",
+                                  transformOrigin: "top center" 
+                                  }}
+                             title="Agreement Preview"
+                          ></iframe>
+               </div>
 
                 </div>
 
