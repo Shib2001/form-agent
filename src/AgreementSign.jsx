@@ -73,13 +73,13 @@ export default function AgreementSign() {
 -------------------------------*/
 page.drawText(userName, {
   x: 170,
-  y: 299,
+  y: 285,
   size: 12,
 });
 
 page.drawText(new Date().toLocaleDateString("en-IN"), {
   x: 170,
-  y: 265,
+  y: 260,
   size: 12,
 });
 
@@ -91,7 +91,7 @@ page.drawText(new Date().toLocaleDateString("en-IN"), {
 // You will likely adjust x slightly if needed.
 page.drawText(new Date().toLocaleDateString("en-IN"), {
   x: 170, 
-  y: 350,  // <- this places it exactly on the blank near COO section
+  y: 400,  // <- this places it exactly on the blank near COO section
   size: 12,
 });
 
