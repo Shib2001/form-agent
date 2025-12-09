@@ -16,7 +16,7 @@ export default function AgreementSign() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Safe base64 conversion
+  // Safe base64 conversio
   function arrayBufferToBase64(buffer) {
     let binary = "";
     const bytes = new Uint8Array(buffer);
