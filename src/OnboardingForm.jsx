@@ -670,19 +670,23 @@ export default function SimpleForm() {
                 <span className="text-gray-500 text-xs ml-1">(6 digits)</span>
               </label>
               <input 
-  type="text"
-  name="postal_code" 
-  value={formValues.postal_code}
-  maxLength={6}
-  pattern="\d{6}"
-  inputMode="numeric"
-  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-  onChange={(e) => {
-    const value = e.target.value.replace(/\D/g, '');
-    handleChange({ ...e, target: { ...e.target, value } });
-  }}
-  required 
-/>
+                type="text"
+                name="postal_code" 
+                value={formValues.postal_code}
+                maxLength={6}
+                pattern="\d{6}"
+                inputMode="numeric"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                onChange={(e) => {
+                  // Only allow numeric input, max 6 digits
+                  const numericValue = e.target.value.replace(/\D/g, '').slice(0, 6);
+                  setFormValues({
+                    ...formValues,
+                    postal_code: numericValue,
+                  });
+                }}
+                required 
+              />
 
             </div>
           </div>
