@@ -344,12 +344,12 @@ export default function SimpleForm() {
     cancelled_cheque: null,
   });
 
-  // Narrow bank suggestions to what the user typed; empty input shows all
-  const filteredBanks = popularBanks.filter((bank) =>
-    formValues.bank_name
-      ? bank.toLowerCase().startsWith(formValues.bank_name.toLowerCase())
-      : true
-  );
+  // Show suggestions only after the user types; match by prefix
+  const filteredBanks = formValues.bank_name
+    ? popularBanks.filter((bank) =>
+        bank.toLowerCase().startsWith(formValues.bank_name.toLowerCase())
+      )
+    : [];
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -801,17 +801,19 @@ export default function SimpleForm() {
               <input
                 name="bank_name"
                 value={formValues.bank_name}
-                list="bank-suggestions"
+                list={filteredBanks.length ? "bank-suggestions" : undefined}
                 autoComplete="off"
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                 onChange={handleChange}
                 required
               />
-              <datalist id="bank-suggestions">
-                {filteredBanks.map((bank) => (
-                  <option key={bank} value={bank} />
-                ))}
-              </datalist>
+              {filteredBanks.length > 0 && (
+                <datalist id="bank-suggestions">
+                  {filteredBanks.map((bank) => (
+                    <option key={bank} value={bank} />
+                  ))}
+                </datalist>
+              )}
             </div>
 
             <div>
