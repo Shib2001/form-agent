@@ -252,6 +252,61 @@
 
 import React, { useState } from "react";
 
+// Most-used Indian banks for quick selection in bank name field
+const popularBanks = [
+  "State Bank of India",
+  "HDFC Bank",
+  "ICICI Bank",
+  "Punjab National Bank",
+  "Axis Bank",
+  "Kotak Mahindra Bank",
+  "Bank of Baroda",
+  "Union Bank of India",
+  "Canara Bank",
+  "IndusInd Bank",
+  "IDFC FIRST Bank",
+  "Yes Bank",
+  "IDBI Bank",
+  "Central Bank of India",
+  "Indian Bank",
+  "Bank of India",
+  "UCO Bank",
+  "Bank of Maharashtra",
+  "Punjab & Sind Bank",
+  "Federal Bank",
+  "South Indian Bank",
+  "RBL Bank",
+  "Bandhan Bank",
+  "Karur Vysya Bank",
+  "City Union Bank",
+  "Jammu & Kashmir Bank",
+  "Karnataka Bank",
+  "Tamilnad Mercantile Bank",
+  "DCB Bank",
+  "AU Small Finance Bank",
+  "Equitas Small Finance Bank",
+  "Ujjivan Small Finance Bank",
+  "Suryoday Small Finance Bank",
+  "Jana Small Finance Bank",
+  "Fincare Small Finance Bank",
+  "ESAF Small Finance Bank",
+  "North East Small Finance Bank",
+  "Shivalik Small Finance Bank",
+  "Utkarsh Small Finance Bank",
+  "Airtel Payments Bank",
+  "Paytm Payments Bank",
+  "India Post Payments Bank",
+  "FINO Payments Bank",
+  "Standard Chartered Bank",
+  "HSBC India",
+  "Citi India",
+  "Deutsche Bank India",
+  "Indian Overseas Bank",
+  "DBS Bank India",
+  "CSB Bank",
+  "Dhanlaxmi Bank",
+];
+
 const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbw8xCiGpiWLUrSjmkaO_NwOtFEfQu1TljrzgCg-vQO5CnbXFKE3CBvoVz2q7vtT6QCh/exec";
 
@@ -288,6 +343,13 @@ export default function SimpleForm() {
     aadhar_back: null,
     cancelled_cheque: null,
   });
+
+  // Narrow bank suggestions to what the user typed; empty input shows all
+  const filteredBanks = popularBanks.filter((bank) =>
+    formValues.bank_name
+      ? bank.toLowerCase().startsWith(formValues.bank_name.toLowerCase())
+      : true
+  );
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -736,13 +798,20 @@ export default function SimpleForm() {
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
                 Bank Name <span className="text-red-500">*</span>
               </label>
-              <input 
-                name="bank_name" 
+              <input
+                name="bank_name"
                 value={formValues.bank_name}
+                list="bank-suggestions"
+                autoComplete="off"
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                onChange={handleChange} 
-                required 
+                onChange={handleChange}
+                required
               />
+              <datalist id="bank-suggestions">
+                {filteredBanks.map((bank) => (
+                  <option key={bank} value={bank} />
+                ))}
+              </datalist>
             </div>
 
             <div>
